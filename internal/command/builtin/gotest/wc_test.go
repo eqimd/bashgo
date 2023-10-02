@@ -83,35 +83,35 @@ func parseAndAssertOutput(
 	}
 }
 
-func TestWcEmptyInput(t *testing.T) {
+func TestEmptyInput(t *testing.T) {
 	output, err := builtin.Wc.Run([]command.CommandArgument{}, &data.Input{Data: ""})
 	require.NoError(t, err, "unexpected error")
 	require.Equal(t, 0, output.ExitCode, "non-zero exitcode")
 	parseAndAssertOutput(t, output, false, true, true, true, "", 0, 0, 0)
 }
 
-func TestWcBasicInput(t *testing.T) {
+func TestBasicInput(t *testing.T) {
 	output, err := builtin.Wc.Run([]command.CommandArgument{}, basicInput)
 	require.NoError(t, err, "unexpected error")
 	require.Equal(t, 0, output.ExitCode, "non-zero exitcode")
 	parseAndAssertOutput(t, output, false, true, true, true, "", 2, 5, 29)
 }
 
-func TestWcBasicInputWithFlags(t *testing.T) {
+func TestBasicInputWithFlags(t *testing.T) {
 	output, err := builtin.Wc.Run([]command.CommandArgument{command.CommandArgument("-lw")}, basicInput)
 	require.NoError(t, err, "unexpected error")
 	require.Equal(t, 0, output.ExitCode, "non-zero exitcode")
 	parseAndAssertOutput(t, output, false, true, true, false, "", 2, 5, 0)
 }
 
-func TestWcInput(t *testing.T) {
+func TestInput(t *testing.T) {
 	output, err := builtin.Wc.Run([]command.CommandArgument{}, advancedInput)
 	require.NoError(t, err, "unexpected error")
 	require.Equal(t, 0, output.ExitCode, "non-zero exitcode")
 	parseAndAssertOutput(t, output, false, true, true, true, "", 7, 14, 108)
 }
 
-func TestWcEmptyFile(t *testing.T) {
+func TestEmptyFile(t *testing.T) {
 	var filename = "file_empty"
 	output, err := builtin.Wc.Run([]command.CommandArgument{command.CommandArgument(filename)}, nil)
 	require.NoError(t, err, "unexpected error")
@@ -119,7 +119,7 @@ func TestWcEmptyFile(t *testing.T) {
 	parseAndAssertOutput(t, output, true, true, true, true, filename, 0, 0, 0)
 }
 
-func TestWcFile(t *testing.T) {
+func TestFile(t *testing.T) {
 	var filename = "file_advanced"
 	output, err := builtin.Wc.Run([]command.CommandArgument{command.CommandArgument(filename)}, nil)
 	require.NoError(t, err, "unexpected error")
