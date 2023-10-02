@@ -1,10 +1,9 @@
 package builtin
 
 import (
-	"errors"
+	"fmt"
 
 	"github.com/eqimd/bashgo/internal/command"
-	"github.com/eqimd/bashgo/internal/data"
 )
 
 var (
@@ -13,33 +12,12 @@ var (
 	Wc   = &builtinCommand{"wc", &wcRunner{}}
 )
 
-var ErrNoCommand = errors.New("command does not exist")
+var ErrNoCommand = fmt.Errorf("command does not exist")
 
 type builtinCommand struct {
 	Name string
 
 	command.Command
-}
-
-type catRunner struct{}
-
-func (r *catRunner) Run(args []command.CommandArgument, input *data.Input) (*data.Output, error) {
-	// TODO
-	return nil, nil
-}
-
-type echoRunner struct{}
-
-func (r *echoRunner) Run(args []command.CommandArgument, input *data.Input) (*data.Output, error) {
-	// TODO
-	return nil, nil
-}
-
-type wcRunner struct{}
-
-func (r *wcRunner) Run(args []command.CommandArgument, input *data.Input) (*data.Output, error) {
-	// TODO
-	return nil, nil
 }
 
 func LookupBuiltinCommand(cmd string) (*builtinCommand, error) {
