@@ -1,7 +1,8 @@
 package builtin
 
 import (
-	"github.com/eqimd/bashgo/internal/basherror"
+	"fmt"
+
 	"github.com/eqimd/bashgo/internal/command"
 )
 
@@ -10,6 +11,8 @@ var (
 	Echo = &builtinCommand{"echo", &echoRunner{}}
 	Wc   = &builtinCommand{"wc", &wcRunner{}}
 )
+
+var ErrNoCommand = fmt.Errorf("command does not exist")
 
 type builtinCommand struct {
 	Name string
@@ -26,6 +29,6 @@ func LookupBuiltinCommand(cmd string) (*builtinCommand, error) {
 	case Wc.Name:
 		return Wc, nil
 	default:
-		return nil, basherror.ErrNoCommand
+		return nil, ErrNoCommand
 	}
 }
