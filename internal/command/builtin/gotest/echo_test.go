@@ -44,7 +44,7 @@ func TestEchoMultiple(t *testing.T) {
 		}
 		output, err := builtin.Echo.Run(args, nil)
 
-		require.NoError(t, err, "unexpected error: %w")
+		require.NoError(t, err, "unexpected error: %v")
 		require.Equal(t, 0, output.ExitCode, "wrong text echoed: want %v, got %v", 0, output.ExitCode)
 		assert.Equal(t, exp, output.Data, "wrong text echoed: want %v, got %v", exp, output.Data)
 	}
