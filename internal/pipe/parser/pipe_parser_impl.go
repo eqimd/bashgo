@@ -12,8 +12,12 @@ type PipeParserImpl struct {
 }
 
 func (parser *PipeParserImpl) Parse(s string) (*pipe.Pipe, error) {
-	// TODO
-	return nil, nil
+	command, args, err := parser.splitter.Split(s)
+	if err != nil {
+		return nil, err
+	}
+
+	return pipe.NewPipe(command, args), nil
 }
 
 func NewPipeParserImpl(splitter splitter.CommandSplitter) *PipeParserImpl {

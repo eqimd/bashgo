@@ -6,7 +6,7 @@ import (
 )
 
 type Pipe struct {
-	command   string
+	command   command.Command
 	arguments []command.CommandArgument
 }
 
@@ -14,6 +14,6 @@ func (pipe *Pipe) RunPipe(input *data.Input) (*data.Output, error) {
 	return nil, nil
 }
 
-func NewPipe(command string, arguments []command.CommandArgument) *Pipe {
+func NewPipe(command command.Command, arguments []command.CommandArgument) *Pipe {
 	return &Pipe{command, arguments}
 }
