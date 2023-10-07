@@ -11,6 +11,7 @@ type PipeParserImpl struct {
 	splitter splitter.CommandSplitter
 }
 
+// Метод создаёт исполяемый Pipe из строки, описывающей его
 func (parser *PipeParserImpl) Parse(s string) (*pipe.Pipe, error) {
 	command, args, err := parser.splitter.Split(s)
 	if err != nil {
@@ -20,6 +21,7 @@ func (parser *PipeParserImpl) Parse(s string) (*pipe.Pipe, error) {
 	return pipe.NewPipe(command, args), nil
 }
 
+// Создание нового парсера
 func NewPipeParserImpl(splitter splitter.CommandSplitter) *PipeParserImpl {
 	return &PipeParserImpl{splitter}
 }
