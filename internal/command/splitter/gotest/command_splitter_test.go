@@ -89,7 +89,7 @@ func TestExternalCommandWithQuotedArg(t *testing.T) {
 
 	require.NoError(t, err)
 
-	expectedArgs := make([]command.CommandArgument, 2)
+	expectedArgs := make([]command.CommandArgument, 1)
 	expectedArgs[0] = command.CommandArgument(arg1)
 	require.Equal(
 		t,
@@ -113,7 +113,7 @@ func TestExternalCommandWithDoubleQuotesInsideSingleQuotedArg(t *testing.T) {
 
 	require.NoError(t, err)
 
-	expectedArgs := make([]command.CommandArgument, 2)
+	expectedArgs := make([]command.CommandArgument, 1)
 	expectedArgs[0] = command.CommandArgument(arg1)
 	require.Equal(
 		t,
@@ -137,7 +137,7 @@ func TestExternalCommandWithDoubleQuotedArg(t *testing.T) {
 
 	require.NoError(t, err)
 
-	expectedArgs := make([]command.CommandArgument, 2)
+	expectedArgs := make([]command.CommandArgument, 1)
 	expectedArgs[0] = command.CommandArgument(arg1)
 	require.Equal(
 		t,
@@ -161,8 +161,58 @@ func TestExternalCommandWithSingleQuotesInsideDoubleQuotedArg(t *testing.T) {
 
 	require.NoError(t, err)
 
+	expectedArgs := make([]command.CommandArgument, 1)
+	expectedArgs[0] = command.CommandArgument(arg1)
+	require.Equal(
+		t,
+		external.NewExternalCommand("ext"),
+		com,
+	)
+	require.Equal(
+		t,
+		expectedArgs,
+		args,
+	)
+}
+
+func TestCommandWithManySpacesBeetweenArgs(t *testing.T) {
+	splitter := splitter.NewCommandSplitterImpl()
+	arg1 := "sddsadsad"
+	arg2 := "123212121321"
+
+	line := "ext  " + arg1 + "  " + arg2
+
+	com, args, err := splitter.Split(line)
+
+	require.NoError(t, err)
+
 	expectedArgs := make([]command.CommandArgument, 2)
 	expectedArgs[0] = command.CommandArgument(arg1)
+	expectedArgs[1] = command.CommandArgument(arg2)
+	require.Equal(
+		t,
+		external.NewExternalCommand("ext"),
+		com,
+	)
+	require.Equal(
+		t,
+		expectedArgs,
+		args,
+	)
+}
+
+func TestCommandWithEmptyQuotedArgs(t *testing.T) {
+	splitter := splitter.NewCommandSplitterImpl()
+
+	line := "ext '' \"\""
+
+	com, args, err := splitter.Split(line)
+
+	require.NoError(t, err)
+
+	expectedArgs := make([]command.CommandArgument, 2)
+	expectedArgs[0] = command.CommandArgument("")
+	expectedArgs[1] = command.CommandArgument("")
 	require.Equal(
 		t,
 		external.NewExternalCommand("ext"),

@@ -27,7 +27,9 @@ func (splitter *CommandSplitterImpl) Split(s string) (command.Command, []command
 			}
 		}
 		if ch == waitFor {
-			words = append(words, s[startFrom:i])
+			if waitFor != rune(' ') || i-startFrom > 1 {
+				words = append(words, s[startFrom:i])
+			}
 			startFrom = i + 1
 			waitFor = rune(' ')
 		}
