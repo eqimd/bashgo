@@ -2,28 +2,30 @@ package holder
 
 import (
 	"os"
-
-	"golang.org/x/exp/maps"
+	"strings"
 )
 
 type envVariablesHolder struct {
-	envVarMap map[string]string
 }
 
-func (holder *envVariablesHolder) Store(key, value string) {
-	holder.envVarMap[key] = value
+func (holder *envVariablesHolder) Store(key, value string) error {
+	return os.Setenv(key, value)
 }
 
 func (holder *envVariablesHolder) Get(key string) string {
-	if val, exist := holder.envVarMap[key]; exist {
-		return val
-	} else {
-		return os.Getenv(key)
-	}
+	return os.Getenv(key)
 }
 
 func (holder *envVariablesHolder) GetAll() map[string]string {
-	return maps.Clone(holder.envVarMap)
+	environ := os.Environ()
+	m := map[string]string{}
+
+	for _, s := range environ {
+		splitArr := strings.Split(s, "=")
+		m[splitArr[0]] = splitArr[1]
+	}
+
+	return m
 }
 
-var EnvVariablesHolder = &envVariablesHolder{map[string]string{}}
+var EnvVariablesHolder = &envVariablesHolder{}
