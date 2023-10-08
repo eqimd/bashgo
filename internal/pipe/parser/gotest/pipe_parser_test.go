@@ -10,7 +10,7 @@ import (
 
 // Данный тест проверяет корректность построения Pipe,
 // Корректность Split проверяется в отдельных тестах
-func TestEcho(t *testing.T) {
+func TestPipeParserSimple(t *testing.T) {
 	text := "abcdabcd"
 	line := "echo " + text
 	splitter := splitter.NewCommandSplitterImpl()
