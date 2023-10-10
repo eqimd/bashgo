@@ -39,8 +39,7 @@ func TestSimpleExternalCommand(t *testing.T) {
 
 	require.NoError(t, err, "unexpected error: %v")
 
-	expectedArgs := make([]command.CommandArgument, 1)
-	expectedArgs[0] = "--version"
+	expectedArgs := []command.CommandArgument{"--version"}
 	require.Equal(
 		t,
 		external.NewExternalCommand("git"),
@@ -64,8 +63,10 @@ func TestExternalCommandWithTwoSimpleArgs(t *testing.T) {
 
 	require.NoError(t, err)
 
-	expectedArgs := make([]command.CommandArgument, 2)
-	expectedArgs[0] = command.CommandArgument(arg1)
+	expectedArgs := []command.CommandArgument{
+		command.CommandArgument(arg1),
+		command.CommandArgument(arg2),
+	}
 	expectedArgs[1] = command.CommandArgument(arg2)
 	require.Equal(
 		t,
@@ -89,8 +90,7 @@ func TestExternalCommandWithQuotedArg(t *testing.T) {
 
 	require.NoError(t, err)
 
-	expectedArgs := make([]command.CommandArgument, 1)
-	expectedArgs[0] = command.CommandArgument(arg1)
+	expectedArgs := []command.CommandArgument{command.CommandArgument(arg1)}
 	require.Equal(
 		t,
 		external.NewExternalCommand("ext"),
@@ -113,8 +113,7 @@ func TestExternalCommandWithDoubleQuotesInsideSingleQuotedArg(t *testing.T) {
 
 	require.NoError(t, err)
 
-	expectedArgs := make([]command.CommandArgument, 1)
-	expectedArgs[0] = command.CommandArgument(arg1)
+	expectedArgs := []command.CommandArgument{command.CommandArgument(arg1)}
 	require.Equal(
 		t,
 		external.NewExternalCommand("ext"),
@@ -137,8 +136,7 @@ func TestExternalCommandWithDoubleQuotedArg(t *testing.T) {
 
 	require.NoError(t, err)
 
-	expectedArgs := make([]command.CommandArgument, 1)
-	expectedArgs[0] = command.CommandArgument(arg1)
+	expectedArgs := []command.CommandArgument{command.CommandArgument(arg1)}
 	require.Equal(
 		t,
 		external.NewExternalCommand("ext"),
@@ -161,8 +159,7 @@ func TestExternalCommandWithSingleQuotesInsideDoubleQuotedArg(t *testing.T) {
 
 	require.NoError(t, err)
 
-	expectedArgs := make([]command.CommandArgument, 1)
-	expectedArgs[0] = command.CommandArgument(arg1)
+	expectedArgs := []command.CommandArgument{command.CommandArgument(arg1)}
 	require.Equal(
 		t,
 		external.NewExternalCommand("ext"),
@@ -186,9 +183,10 @@ func TestCommandWithManySpacesBeetweenArgs(t *testing.T) {
 
 	require.NoError(t, err)
 
-	expectedArgs := make([]command.CommandArgument, 2)
-	expectedArgs[0] = command.CommandArgument(arg1)
-	expectedArgs[1] = command.CommandArgument(arg2)
+	expectedArgs := []command.CommandArgument{
+		command.CommandArgument(arg1),
+		command.CommandArgument(arg2),
+	}
 	require.Equal(
 		t,
 		external.NewExternalCommand("ext"),
@@ -210,9 +208,10 @@ func TestCommandWithEmptyQuotedArgs(t *testing.T) {
 
 	require.NoError(t, err)
 
-	expectedArgs := make([]command.CommandArgument, 2)
-	expectedArgs[0] = command.CommandArgument("")
-	expectedArgs[1] = command.CommandArgument("")
+	expectedArgs := []command.CommandArgument{
+		command.CommandArgument(""),
+		command.CommandArgument(""),
+	}
 	require.Equal(
 		t,
 		external.NewExternalCommand("ext"),
