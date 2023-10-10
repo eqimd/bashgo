@@ -2,13 +2,18 @@ package repl
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"os"
 	"strings"
 
 	"github.com/eqimd/bashgo/internal/bash"
+	"github.com/eqimd/bashgo/internal/command/builtin"
 )
 
+/*
+ * Структура для Read-Evaluate-Print Loop
+ */
 type Repl struct {
 	bash bash.Bash
 }
@@ -28,8 +33,17 @@ func (repl *Repl) StartRepl() error {
 		cmd = strings.Replace(cmd, "\n", "", -1)
 
 		outp, exitCode, err := repl.bash.Execute(cmd)
-		// TODO
-		fmt.Println(outp, exitCode, err)
+		if err != nil {
+			if errors.Is(err, builtin.ErrExit) {
+				return nil
+			}
+			fmt.Println(err.Error())
+		} else {
+			fmt.Println(outp)
+			if exitCode != 0 {
+				fmt.Println("Non-zero exit code:", exitCode)
+			}
+		}
 	}
 }
 

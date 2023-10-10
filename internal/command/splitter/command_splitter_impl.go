@@ -12,7 +12,10 @@ var _ CommandSplitter = &CommandSplitterImpl{}
 
 type CommandSplitterImpl struct{}
 
-// Данный метод разделяет строку на команду и её аругменты, также приводя название команды к классу, ей соответствующему
+/*
+ * Данный метод разделяет строку на команду и её аругменты,
+ * также приводя название команды к классу, ей соответствующему
+ */
 func (splitter *CommandSplitterImpl) Split(s string) (command.Command, []command.CommandArgument, error) {
 	var waitFor = rune(' ')
 	var startFrom = 0

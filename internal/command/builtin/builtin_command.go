@@ -6,6 +6,9 @@ import (
 	"github.com/eqimd/bashgo/internal/command"
 )
 
+/*
+ * Реализации builtin-комманд
+ */
 var (
 	Cat  = &builtinCommand{"cat", &catRunner{}}
 	Echo = &builtinCommand{"echo", &echoRunner{}}
@@ -23,6 +26,10 @@ type builtinCommand struct {
 	command.Command
 }
 
+/*
+ * Функция для получения встроенной команды.
+ * Если функции с нужным именем не существует, возвращает ошибку
+ */
 func LookupBuiltinCommand(cmd string) (*builtinCommand, error) {
 	switch cmd {
 	case Cat.Name:

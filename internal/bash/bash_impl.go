@@ -8,6 +8,9 @@ import (
 
 var _ Bash = &BashImpl{}
 
+/*
+ * Реализация интерфейса Bash
+ */
 type BashImpl struct {
 	pipeParser parser.PipeParser
 }
@@ -26,6 +29,9 @@ func (bash *BashImpl) Execute(command string) (string, int, error) {
 	return output.Data, output.ExitCode, nil
 }
 
+/*
+ * Конструктор для BashImpl. Принимает на вход PipeParser
+ */
 func NewBashImpl(pipeParser parser.PipeParser) *BashImpl {
 	return &BashImpl{pipeParser}
 }

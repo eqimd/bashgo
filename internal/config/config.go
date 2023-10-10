@@ -9,6 +9,9 @@ type config struct {
 	Logger  *logrus.Logger
 }
 
+/*
+ * Локальный конфиг приложения. Не имеет отношения к самому Bash
+ */
 var Config = &config{}
 
 func InitConfig(

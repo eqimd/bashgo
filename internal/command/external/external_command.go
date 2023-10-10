@@ -9,6 +9,10 @@ import (
 	"github.com/eqimd/bashgo/internal/data"
 )
 
+
+/*
+ * Структура, описывающая внешнюю команду
+ */
 type ExternalCommand struct {
 	executablePath string
 }
@@ -53,6 +57,9 @@ func (cmd *ExternalCommand) Run(args []command.CommandArgument, input *data.Inpu
 	return outp, nil
 }
 
+/*
+ * Конструктор для внешней команды
+ */
 func NewExternalCommand(executablePath string) *ExternalCommand {
 	return &ExternalCommand{executablePath}
 }

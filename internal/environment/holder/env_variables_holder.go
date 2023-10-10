@@ -5,6 +5,9 @@ import (
 	"strings"
 )
 
+/*
+ * Структура для задания и получения переменных окружения
+ */
 type envVariablesHolder struct {
 }
 

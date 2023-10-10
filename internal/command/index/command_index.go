@@ -8,7 +8,9 @@ import (
 
 type commandIndex struct{}
 
-// Ищет соответствие имени команды её класса и преобразует в соответствующий класс
+/*
+ * Ищет соответствие имени команды её класса и преобразует в соответствующий класс
+ */
 func (index *commandIndex) LookupCommand(cmd string) (command.Command, error) {
 	com, err := builtin.LookupBuiltinCommand(cmd)
 
@@ -16,7 +18,6 @@ func (index *commandIndex) LookupCommand(cmd string) (command.Command, error) {
 		return com, nil
 	}
 
-	// TODO: сделать поиск external command
 	return external.NewExternalCommand(cmd), nil
 }
 
