@@ -1,6 +1,7 @@
 package splitter
 
 import (
+	// "fmt"
 	"strings"
 
 	"github.com/eqimd/bashgo/internal/command"
@@ -30,7 +31,7 @@ func (splitter *CommandSplitterImpl) Split(s string) (command.Command, []command
 			}
 		}
 		if ch == waitFor {
-			if waitFor != rune(' ') || i-startFrom > 1 {
+			if waitFor != rune(' ') || i != startFrom {
 				words = append(words, s[startFrom:i])
 			}
 			startFrom = i + 1
