@@ -2,9 +2,11 @@ package main
 
 import (
 	"github.com/eqimd/bashgo/internal/bash"
-	"github.com/eqimd/bashgo/internal/command/splitter"
+	cmdsplitter "github.com/eqimd/bashgo/internal/command/splitter"
 	"github.com/eqimd/bashgo/internal/config"
-	"github.com/eqimd/bashgo/internal/pipe/parser"
+	pipeparser "github.com/eqimd/bashgo/internal/pipe/parser"
+	pipelineparser "github.com/eqimd/bashgo/internal/pipeline/parser"
+	pipelinesplitter "github.com/eqimd/bashgo/internal/pipeline/splitter"
 	"github.com/eqimd/bashgo/internal/repl"
 	"github.com/spf13/pflag"
 )
@@ -16,9 +18,13 @@ func main() {
 
 	config.InitConfig(isDebug)
 
-	cmdSplitter := splitter.NewCommandSplitterImpl()
-	pipeParser := parser.NewPipeParserImpl(cmdSplitter)
-	bash := bash.NewBashImpl(pipeParser)
+	cmdSplitter := cmdsplitter.NewCommandSplitterImpl()
+	pipeParser := pipeparser.NewPipeParserImpl(cmdSplitter)
+
+	var pipelineSplitter pipelinesplitter.PipelineSplitter
+	pipelineParser := pipelineparser.NewPipelineParserImpl(pipelineSplitter, pipeParser)
+
+	bash := bash.NewBashImpl(pipelineParser)
 	repl := repl.NewRepl(bash)
 
 	if err := repl.StartRepl(); err != nil {
