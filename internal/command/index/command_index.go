@@ -11,14 +11,14 @@ type commandIndex struct{}
 /*
  * Ищет соответствие имени команды её класса и преобразует в соответствующий класс
  */
-func (index *commandIndex) LookupCommand(cmd string) (command.Command, error) {
+func (index *commandIndex) LookupCommand(cmd string) command.Command {
 	com, err := builtin.LookupBuiltinCommand(cmd)
 
 	if err == nil {
-		return com, nil
+		return com
 	}
 
-	return external.NewExternalCommand(cmd), nil
+	return external.NewExternalCommand(cmd)
 }
 
 var CommandIndex = &commandIndex{}

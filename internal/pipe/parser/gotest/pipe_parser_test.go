@@ -16,9 +16,7 @@ func TestPipeParserSimple(t *testing.T) {
 	splitter := splitter.NewCommandSplitterImpl()
 	parser := parser.NewPipeParserImpl(splitter)
 
-	pipe, err := parser.Parse(line)
-
-	require.NoError(t, err, "unexpected error: %v")
+	pipe := parser.Parse(line)
 
 	out, err := pipe.RunPipe(nil)
 

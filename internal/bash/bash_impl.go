@@ -16,10 +16,7 @@ type BashImpl struct {
 }
 
 func (bash *BashImpl) Execute(command string) (string, int, error) {
-	pipe, err := bash.pipeParser.Parse(command)
-	if err != nil {
-		return "", 0, fmt.Errorf("can't parse pipe: %w", err)
-	}
+	pipe := bash.pipeParser.Parse(command)
 
 	output, err := pipe.RunPipe(nil)
 	if err != nil {

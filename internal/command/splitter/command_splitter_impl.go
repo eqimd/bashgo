@@ -16,7 +16,7 @@ type CommandSplitterImpl struct{}
  * Данный метод разделяет строку на команду и её аругменты,
  * также приводя название команды к классу, ей соответствующему
  */
-func (splitter *CommandSplitterImpl) Split(s string) (command.Command, []command.CommandArgument, error) {
+func (splitter *CommandSplitterImpl) Split(s string) (command.Command, []command.CommandArgument) {
 	var waitFor = rune(' ')
 	var startFrom = 0
 	words := make([]string, 0)
@@ -46,16 +46,11 @@ func (splitter *CommandSplitterImpl) Split(s string) (command.Command, []command
 
 	tryEnvSplit := strings.Split(commandWord, "=")
 	if len(tryEnvSplit) == 2 {
-		return env.NewEnvVariableCommand(tryEnvSplit[0], tryEnvSplit[1]), args, nil
+		return env.NewEnvVariableCommand(tryEnvSplit[0], tryEnvSplit[1]), args
 	}
 
-	com, err := index.CommandIndex.LookupCommand(commandWord)
-
-	if err == nil {
-		return com, args, nil
-	} else {
-		return nil, nil, err
-	}
+	com := index.CommandIndex.LookupCommand(commandWord)
+	return com, args
 }
 
 func NewCommandSplitterImpl() *CommandSplitterImpl {

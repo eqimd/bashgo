@@ -12,13 +12,10 @@ type PipeParserImpl struct {
 }
 
 // Метод создаёт исполяемый Pipe из строки, описывающей его
-func (parser *PipeParserImpl) Parse(s string) (*pipe.Pipe, error) {
-	command, args, err := parser.splitter.Split(s)
-	if err != nil {
-		return nil, err
-	}
+func (parser *PipeParserImpl) Parse(s string) *pipe.Pipe {
+	command, args := parser.splitter.Split(s)
 
-	return pipe.NewPipe(command, args), nil
+	return pipe.NewPipe(command, args)
 }
 
 // Создание нового парсера

@@ -17,9 +17,8 @@ func TestParseEnvCommand(t *testing.T) {
 	envValue := "def"
 	line := envName + "=" + envValue
 
-	com, args, err := splitter.Split(line)
+	com, args := splitter.Split(line)
 
-	require.NoError(t, err, "unexpected error: %v")
 	require.Equal(t,
 		env.NewEnvVariableCommand(envName, envValue),
 		com,
@@ -35,9 +34,7 @@ func TestSimpleExternalCommand(t *testing.T) {
 
 	line := "git --version"
 
-	com, args, err := splitter.Split(line)
-
-	require.NoError(t, err, "unexpected error: %v")
+	com, args := splitter.Split(line)
 
 	expectedArgs := []command.CommandArgument{"--version"}
 	require.Equal(
@@ -59,9 +56,7 @@ func TestExternalCommandWithTwoSimpleArgs(t *testing.T) {
 
 	line := "ext " + arg1 + " " + arg2
 
-	com, args, err := splitter.Split(line)
-
-	require.NoError(t, err)
+	com, args := splitter.Split(line)
 
 	expectedArgs := []command.CommandArgument{
 		command.CommandArgument(arg1),
@@ -86,9 +81,7 @@ func TestExternalCommandWithQuotedArg(t *testing.T) {
 
 	line := "ext '" + arg1 + "'"
 
-	com, args, err := splitter.Split(line)
-
-	require.NoError(t, err)
+	com, args := splitter.Split(line)
 
 	expectedArgs := []command.CommandArgument{command.CommandArgument(arg1)}
 	require.Equal(
@@ -109,9 +102,7 @@ func TestExternalCommandWithDoubleQuotesInsideSingleQuotedArg(t *testing.T) {
 
 	line := "ext '" + arg1 + "'"
 
-	com, args, err := splitter.Split(line)
-
-	require.NoError(t, err)
+	com, args := splitter.Split(line)
 
 	expectedArgs := []command.CommandArgument{command.CommandArgument(arg1)}
 	require.Equal(
@@ -132,9 +123,7 @@ func TestExternalCommandWithDoubleQuotedArg(t *testing.T) {
 
 	line := "ext \"" + arg1 + "\""
 
-	com, args, err := splitter.Split(line)
-
-	require.NoError(t, err)
+	com, args := splitter.Split(line)
 
 	expectedArgs := []command.CommandArgument{command.CommandArgument(arg1)}
 	require.Equal(
@@ -155,9 +144,7 @@ func TestExternalCommandWithSingleQuotesInsideDoubleQuotedArg(t *testing.T) {
 
 	line := "ext \"" + arg1 + "\""
 
-	com, args, err := splitter.Split(line)
-
-	require.NoError(t, err)
+	com, args := splitter.Split(line)
 
 	expectedArgs := []command.CommandArgument{command.CommandArgument(arg1)}
 	require.Equal(
@@ -179,9 +166,7 @@ func TestCommandWithManySpacesBeetweenArgs(t *testing.T) {
 
 	line := "ext  " + arg1 + "  " + arg2
 
-	com, args, err := splitter.Split(line)
-
-	require.NoError(t, err)
+	com, args := splitter.Split(line)
 
 	expectedArgs := []command.CommandArgument{
 		command.CommandArgument(arg1),
@@ -204,9 +189,7 @@ func TestCommandWithEmptyQuotedArgs(t *testing.T) {
 
 	line := "ext '' \"\""
 
-	com, args, err := splitter.Split(line)
-
-	require.NoError(t, err)
+	com, args := splitter.Split(line)
 
 	expectedArgs := []command.CommandArgument{
 		command.CommandArgument(""),
