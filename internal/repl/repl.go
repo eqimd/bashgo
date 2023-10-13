@@ -30,6 +30,7 @@ func (repl *Repl) StartRepl() error {
 
 		// convert CRLF to LF
 
+		cmd = strings.Replace(cmd, "\r\n", "\n", -1)
 		cmd = strings.Replace(cmd, "\n", "", -1)
 
 		outp, exitCode, err := repl.bash.Execute(cmd)
