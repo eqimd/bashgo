@@ -21,7 +21,7 @@ func main() {
 	cmdSplitter := cmdsplitter.NewCommandSplitterImpl()
 	pipeParser := pipeparser.NewPipeParserImpl(cmdSplitter)
 
-	var pipelineSplitter pipelinesplitter.PipelineSplitter
+	pipelineSplitter := pipelinesplitter.NewPipelineSplitterImpl()
 	pipelineParser := pipelineparser.NewPipelineParserImpl(pipelineSplitter, pipeParser)
 
 	bash := bash.NewBashImpl(pipelineParser)

@@ -6,6 +6,7 @@ import (
 
 	"github.com/eqimd/bashgo/internal/command"
 	"github.com/eqimd/bashgo/internal/command/env"
+	"github.com/eqimd/bashgo/internal/command/external"
 	"github.com/eqimd/bashgo/internal/command/index"
 )
 
@@ -18,6 +19,10 @@ type CommandSplitterImpl struct{}
  * также приводя название команды к классу, ей соответствующему
  */
 func (splitter *CommandSplitterImpl) Split(s string) (command.Command, []command.CommandArgument) {
+	if len(s) == 0 {
+		return external.NewExternalCommand(s), []command.CommandArgument{}
+	}
+
 	var waitFor = rune(' ')
 	var startFrom = 0
 	words := make([]string, 0)

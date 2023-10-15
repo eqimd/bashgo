@@ -32,5 +32,5 @@ func NewPipelineParserImpl(
 	splitter splitter.PipelineSplitter,
 	pipeParser pipeparser.PipeParser,
 ) *PipelineParserImpl {
-	return &PipelineParserImpl{splitter: splitter}
+	return &PipelineParserImpl{splitter: splitter, pipeParser: pipeParser}
 }
