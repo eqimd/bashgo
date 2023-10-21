@@ -1,7 +1,7 @@
 package pipeline
 
 import (
-	"fmt"
+	"errors"
 
 	"github.com/eqimd/bashgo/internal/data"
 	"github.com/eqimd/bashgo/internal/pipe"
@@ -21,7 +21,7 @@ func (pipeline *PipelineImpl) Run(input *data.Input) (*data.Output, error) {
 	for _, pipe := range pipeline.pipes {
 		outp, err := pipe.RunPipe(curInp)
 		if err != nil {
-			return nil, fmt.Errorf("pipeline run failed: %v", err)
+			return nil, errors.Join(errors.New("pipeline run failed"), err)
 		}
 
 		if outp.ExitCode != 0 {

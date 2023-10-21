@@ -2,6 +2,7 @@ package builtin
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -48,6 +49,9 @@ func (r *wcRunner) Run(args []command.CommandArgument, input *data.Input) (*data
 	}
 
 	if len(filenames) == 0 {
+		if input == nil {
+			return nil, errors.New("wc: files are not provided, and input is nil")
+		}
 		inputReader := strings.NewReader(input.Data)
 		result := make([]string, 0)
 		err := calcAndAddWcStats(&result, needLines, needWords, needChars, inputReader)
