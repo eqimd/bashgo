@@ -3,7 +3,7 @@ package bash
 import (
 	"fmt"
 
-	"github.com/eqimd/bashgo/internal/pipe/parser"
+	"github.com/eqimd/bashgo/internal/pipeline/parser"
 )
 
 var _ Bash = &BashImpl{}
@@ -12,15 +12,15 @@ var _ Bash = &BashImpl{}
  * Реализация интерфейса Bash
  */
 type BashImpl struct {
-	pipeParser parser.PipeParser
+	pipelineParser parser.PipelineParser
 }
 
 func (bash *BashImpl) Execute(command string) (string, int, error) {
-	pipe := bash.pipeParser.Parse(command)
+	pipeline := bash.pipelineParser.Parse(command)
 
-	output, err := pipe.RunPipe(nil)
+	output, err := pipeline.Run(nil)
 	if err != nil {
-		return "", 0, fmt.Errorf("can't run pipe: %w", err)
+		return "", 0, fmt.Errorf("can't run pipeline: %w", err)
 	}
 
 	return output.Data, output.ExitCode, nil
@@ -29,6 +29,6 @@ func (bash *BashImpl) Execute(command string) (string, int, error) {
 /*
  * Конструктор для BashImpl. Принимает на вход PipeParser
  */
-func NewBashImpl(pipeParser parser.PipeParser) *BashImpl {
-	return &BashImpl{pipeParser}
+func NewBashImpl(pipelineParser parser.PipelineParser) *BashImpl {
+	return &BashImpl{pipelineParser}
 }
