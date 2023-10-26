@@ -10,6 +10,8 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+var Echo, _ = builtin.LookupBuiltinCommand("echo")
+
 func TestEchoSingle(t *testing.T) {
 	teststrs := []string{
 		"",
@@ -21,7 +23,7 @@ func TestEchoSingle(t *testing.T) {
 		"Привет!\nBonjour!\n¡Hola!\nمرحبا!\nこんにちは!",
 	}
 	for _, tstr := range teststrs {
-		output, err := builtin.Echo.Run([]command.CommandArgument{command.CommandArgument(tstr)}, nil)
+		output, err := Echo.Run([]command.CommandArgument{command.CommandArgument(tstr)}, nil)
 
 		require.NoError(t, err, "unexpected error: %v")
 		require.Equal(t, 0, output.ExitCode, "wrong text echoed: want %v, got %v", 0, output.ExitCode)
@@ -42,7 +44,7 @@ func TestEchoMultiple(t *testing.T) {
 		for _, tstr := range tstrs {
 			args = append(args, command.CommandArgument(tstr))
 		}
-		output, err := builtin.Echo.Run(args, nil)
+		output, err := Echo.Run(args, nil)
 
 		require.NoError(t, err, "unexpected error: %v")
 		require.Equal(t, 0, output.ExitCode, "wrong text echoed: want %v, got %v", 0, output.ExitCode)
