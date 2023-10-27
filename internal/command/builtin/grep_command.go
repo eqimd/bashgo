@@ -60,6 +60,7 @@ func (r *grepRunner) Run(args []command.CommandArgument, input *data.Input) (*da
 			return nil, fmt.Errorf("input is nil")
 		}
 		grepData = input.Data
+		fmt.Println("HERE HERE" + grepData)
 	} else {
 		b, err := os.ReadFile(filename)
 		if err != nil {
@@ -100,10 +101,7 @@ func doGrep(
 	outp := []string{}
 
 	splitData := strings.Split(data, "\n")
-	splitData = splitData[:len(splitData)-1]
-
 	splitOriginalData := strings.Split(originalData, "\n")
-	splitOriginalData = splitOriginalData[:len(splitOriginalData)-1]
 
 	var checkFunc (func(s string) bool)
 
@@ -111,7 +109,7 @@ func doGrep(
 		checkFunc = func(s string) bool {
 			splitS := strings.Split(s, " ")
 			for _, sp := range splitS {
-				if sp == s {
+				if sp == word {
 					return true
 				}
 			}
