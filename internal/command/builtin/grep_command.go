@@ -3,6 +3,7 @@ package builtin
 import (
 	"fmt"
 	"os"
+	"regexp"
 	"strings"
 
 	"github.com/eqimd/bashgo/internal/command"
@@ -89,5 +90,34 @@ func doGrep(
 	word string,
 	data string,
 ) ([]string, error) {
+	outp := []string{}
+	splitData := strings.Split(data, "\n")
 
+	if caseInsensitive {
+		word = strings.ToLower(word)
+		data = strings.ToLower(data)
+	}
+
+	shouldPrintAfterLines := 0
+	if findWord {
+		for _, s := range splitData {
+			if s == word {
+				outp = append(outp, s)
+				shouldPrintAfterLines = afterLines
+				continue
+			}
+
+			if shouldPrintAfterLines != 0 {
+				outp = append(outp, s)
+				shouldPrintAfterLines--
+			}
+		}
+
+		return splitData, nil
+	}
+
+	rgx, err := regexp.Compile()
+	if err != nil {
+		return nil, err
+	}
 }
