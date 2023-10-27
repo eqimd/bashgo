@@ -109,7 +109,14 @@ func doGrep(
 
 	if findWord {
 		checkFunc = func(s string) bool {
-			return s == word
+			splitS := strings.Split(s, " ")
+			for _, sp := range splitS {
+				if sp == s {
+					return true
+				}
+			}
+
+			return false
 		}
 	} else {
 		rgx, err := regexp.Compile(word)
