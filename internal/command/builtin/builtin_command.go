@@ -23,12 +23,6 @@ var (
 var ErrExit = fmt.Errorf("exit initiated")
 var ErrNoCommand = fmt.Errorf("command does not exist")
 
-type builtinCommand struct {
-	Name string
-
-	command.Command
-}
-
 /*
  * Функция для получения встроенной команды.
  * Если функции с нужным именем не существует, возвращает ошибку
