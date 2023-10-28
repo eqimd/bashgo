@@ -9,9 +9,11 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+var Cat, _ = builtin.LookupBuiltinCommand("cat")
+
 func TestCatEmpty(t *testing.T) {
 	filename := "file_empty"
-	output, err := builtin.Cat.Run([]command.CommandArgument{command.CommandArgument(filename)}, nil)
+	output, err := Cat.Run([]command.CommandArgument{command.CommandArgument(filename)}, nil)
 
 	require.NoError(t, err, "unexpected error: %v")
 	require.Equal(t, 0, output.ExitCode, "non-zero exitcode")
@@ -20,7 +22,7 @@ func TestCatEmpty(t *testing.T) {
 
 func TestCatSingle(t *testing.T) {
 	filename := "file_1"
-	output, err := builtin.Cat.Run([]command.CommandArgument{command.CommandArgument(filename)}, nil)
+	output, err := Cat.Run([]command.CommandArgument{command.CommandArgument(filename)}, nil)
 	exp := "This is the first part."
 
 	require.NoError(t, err, "unexpected error: %v")
@@ -31,7 +33,7 @@ func TestCatSingle(t *testing.T) {
 func TestCatMultiple(t *testing.T) {
 	filename1 := "file_1"
 	filename2 := "file_2"
-	output, err := builtin.Cat.Run([]command.CommandArgument{
+	output, err := Cat.Run([]command.CommandArgument{
 		command.CommandArgument(filename1),
 		command.CommandArgument(filename2),
 	}, nil)
@@ -44,7 +46,7 @@ func TestCatMultiple(t *testing.T) {
 
 func TestCatSame(t *testing.T) {
 	filename := "file_bytes"
-	output, err := builtin.Cat.Run([]command.CommandArgument{
+	output, err := Cat.Run([]command.CommandArgument{
 		command.CommandArgument(filename),
 		command.CommandArgument(filename),
 	}, nil)

@@ -12,6 +12,8 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+var Wc, _ = builtin.LookupBuiltinCommand("wc")
+
 var basicInput = &data.Input{Data: "Hello, World!\nThis is bashgo!"}
 var advancedInput = &data.Input{Data: "Hello, World 👋\nWe got emojis now 😎\n 🤟🙌👨🍊 🧊🧩\nИ русские слова тоже\n\n\n"}
 
@@ -84,28 +86,28 @@ func parseAndAssertOutput(
 }
 
 func TestEmptyInput(t *testing.T) {
-	output, err := builtin.Wc.Run([]command.CommandArgument{}, &data.Input{Data: ""})
+	output, err := Wc.Run([]command.CommandArgument{}, &data.Input{Data: ""})
 	require.NoError(t, err, "unexpected error")
 	require.Equal(t, 0, output.ExitCode, "non-zero exitcode")
 	parseAndAssertOutput(t, output, false, true, true, true, "", 0, 0, 0)
 }
 
 func TestBasicInput(t *testing.T) {
-	output, err := builtin.Wc.Run([]command.CommandArgument{}, basicInput)
+	output, err := Wc.Run([]command.CommandArgument{}, basicInput)
 	require.NoError(t, err, "unexpected error")
 	require.Equal(t, 0, output.ExitCode, "non-zero exitcode")
 	parseAndAssertOutput(t, output, false, true, true, true, "", 2, 5, 29)
 }
 
 func TestBasicInputWithFlags(t *testing.T) {
-	output, err := builtin.Wc.Run([]command.CommandArgument{command.CommandArgument("-lw")}, basicInput)
+	output, err := Wc.Run([]command.CommandArgument{command.CommandArgument("-lw")}, basicInput)
 	require.NoError(t, err, "unexpected error")
 	require.Equal(t, 0, output.ExitCode, "non-zero exitcode")
 	parseAndAssertOutput(t, output, false, true, true, false, "", 2, 5, 0)
 }
 
 func TestInput(t *testing.T) {
-	output, err := builtin.Wc.Run([]command.CommandArgument{}, advancedInput)
+	output, err := Wc.Run([]command.CommandArgument{}, advancedInput)
 	require.NoError(t, err, "unexpected error")
 	require.Equal(t, 0, output.ExitCode, "non-zero exitcode")
 	parseAndAssertOutput(t, output, false, true, true, true, "", 7, 14, 108)
@@ -113,7 +115,7 @@ func TestInput(t *testing.T) {
 
 func TestEmptyFile(t *testing.T) {
 	var filename = "file_empty"
-	output, err := builtin.Wc.Run([]command.CommandArgument{command.CommandArgument(filename)}, nil)
+	output, err := Wc.Run([]command.CommandArgument{command.CommandArgument(filename)}, nil)
 	require.NoError(t, err, "unexpected error")
 	require.Equal(t, 0, output.ExitCode, "non-zero exitcode")
 	parseAndAssertOutput(t, output, true, true, true, true, filename, 0, 0, 0)
@@ -121,7 +123,7 @@ func TestEmptyFile(t *testing.T) {
 
 func TestFile(t *testing.T) {
 	var filename = "file_advanced"
-	output, err := builtin.Wc.Run([]command.CommandArgument{command.CommandArgument(filename)}, nil)
+	output, err := Wc.Run([]command.CommandArgument{command.CommandArgument(filename)}, nil)
 	require.NoError(t, err, "unexpected error")
 	require.Equal(t, 0, output.ExitCode, "non-zero exitcode")
 	parseAndAssertOutput(t, output, true, true, true, true, filename, 7, 14, 108)

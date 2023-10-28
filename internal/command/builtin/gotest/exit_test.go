@@ -9,8 +9,10 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+var Exit, _ = builtin.LookupBuiltinCommand("exit")
+
 func TestExitNaive(t *testing.T) {
-	output, err := builtin.Exit.Run([]command.CommandArgument{}, nil)
+	output, err := Exit.Run([]command.CommandArgument{}, nil)
 	require.Equal(t, 0, output.ExitCode, "non-zero exitcode")
 	assert.ErrorIs(t, err, builtin.ErrExit, "wrong error returned: want %v, got %v", err, builtin.ErrExit)
 }
